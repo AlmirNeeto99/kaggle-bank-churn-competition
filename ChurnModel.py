@@ -1,9 +1,22 @@
-from torch.nn import Module
+from torch import nn, Tensor
 
 
-class ChurnModel(Module):
+class ChurnModel(nn.Module):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.l1 = nn.Linear(11, 11264)
+        self.a1 = nn.ReLU()
+        self.l2 = nn.Linear(11264, 176)
+        self.a2 = nn.Sigmoid()
+        self.l3 = nn.Linear(176, 1)
+        self.a3 = nn.SiLU()
 
-    def forward(self, x):
-        pass
+    def forward(self, x) -> Tensor:
+        x = self.l1(x)
+        x = self.a1(x)
+        x = self.l2(x)
+        x = self.a2(x)
+        x = self.l3(x)
+        x = self.a3(x)
+
+        return x
