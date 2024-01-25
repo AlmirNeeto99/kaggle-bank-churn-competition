@@ -7,8 +7,9 @@ from torch.utils.data import Dataset
 class BankChurnDataset(Dataset):
     data: pd.DataFrame = None
 
-    def __init__(self, path) -> None:
+    def __init__(self, path, isTest=False) -> None:
         super().__init__()
+        self.isTest = isTest
         self.data = pd.read_csv(path)
         self.indexes = list(range(3, 13))
         self.process()
@@ -31,6 +32,14 @@ class BankChurnDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, index):
+        if self.isTest:
+            return (
+                tensor(self.data.iloc[index, 0]),
+                tensor(
+                    self.data.iloc[index, self.indexes].to_list(), dtype=float32
+                ),
+            )
+
         return tensor(
             self.data.iloc[index, self.indexes].to_list(), dtype=float32
         ), tensor(self.data.iloc[index, 13], dtype=float32)
