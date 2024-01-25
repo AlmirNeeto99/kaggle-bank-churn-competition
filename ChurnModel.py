@@ -7,9 +7,9 @@ class ChurnModel(nn.Module):
         self.l1 = nn.Linear(10, 10240)
         self.a1 = nn.ReLU()
         self.l2 = nn.Linear(10240, 160)
-        self.a2 = nn.Sigmoid()
+        self.a2 = nn.SiLU()
         self.l3 = nn.Linear(160, 1)
-        self.a3 = nn.SiLU()
+        self.a3 = nn.Sigmoid()
 
     def forward(self, x) -> Tensor:
         x = self.l1(x)
