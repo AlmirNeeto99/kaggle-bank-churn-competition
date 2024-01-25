@@ -4,11 +4,11 @@ from torch import nn, Tensor
 class ChurnModel(nn.Module):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.l1 = nn.Linear(11, 11264)
+        self.l1 = nn.Linear(10, 10240)
         self.a1 = nn.ReLU()
-        self.l2 = nn.Linear(11264, 176)
+        self.l2 = nn.Linear(10240, 160)
         self.a2 = nn.Sigmoid()
-        self.l3 = nn.Linear(176, 1)
+        self.l3 = nn.Linear(160, 1)
         self.a3 = nn.SiLU()
 
     def forward(self, x) -> Tensor:
