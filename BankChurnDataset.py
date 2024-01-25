@@ -1,5 +1,5 @@
 import pandas as pd
-from torch import tensor
+from torch import tensor, float32
 from tiktoken import get_encoding
 from torch.utils.data import Dataset
 
@@ -31,6 +31,6 @@ class BankChurnDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, index):
-        return tensor(self.data.iloc[index, self.indexes].to_list()), tensor(
-            self.data.iloc[index, 13]
-        )
+        return tensor(
+            self.data.iloc[index, self.indexes].to_list(), dtype=float32
+        ), tensor(self.data.iloc[index, 13], dtype=float32)
